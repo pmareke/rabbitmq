@@ -2,6 +2,7 @@
 
 ## Consumer
 
+- Install pika.
 - Define a connection.
 - Create a channel.
 - Declare a queue.
@@ -11,6 +12,7 @@
 
 ## Producer
 
+- Install pika.
 - Define a connection.
 - Create a channel.
 - Declare a queue.
