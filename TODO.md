@@ -7,6 +7,7 @@
 - Run test (Makefile).
 - Add RabbitMQ (compose).
 - `Consumer`.
+    - `Printer`.
 - Update entrypoint.
 
 ## Producer
