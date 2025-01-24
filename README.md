@@ -8,7 +8,7 @@
 ## Exchanges
 
 - `Messages` are published to `exchanges`.
-- `Exchanges` take a message and route it into zero or more queues.
+- `Exchanges` take a message and route it into zero or more `queues`.
 - The `default` exchange is a `direct` exchange with no name pre-declared by the broker.
 - A `direct` exchange delivers messages to queues based on the message routing key.
 - `Exchanges` can be durable or transient.
