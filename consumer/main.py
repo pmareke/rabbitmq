@@ -1,6 +1,6 @@
 from src.consumer import Consumer
-from src.printer import Printer
+from src.system_printer import SystemPrinter
 
-printer = Printer()
+printer = SystemPrinter()
 consumer = Consumer(printer)
 consumer.start()
