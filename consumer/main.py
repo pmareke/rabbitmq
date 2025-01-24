@@ -1,17 +1,6 @@
-from pika import BasicProperties
-from pika.spec import Basic, Channel
-
 from src.consumer import Consumer
+from src.printer import Printer
 
-
-def printer(
-    channel: Channel,
-    method: Basic.Deliver,
-    props: BasicProperties,
-    body: str,
-) -> None:
-    print(body)
-
-
+printer = Printer()
 consumer = Consumer(printer)
 consumer.start()

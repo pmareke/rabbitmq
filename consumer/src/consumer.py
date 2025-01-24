@@ -4,11 +4,13 @@ import pika
 from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
+from src.printer import Printer
+
 
 class Consumer:
     _QUEUE_NAME = "hello"
 
-    def __init__(self, printer: Callable) -> None:
+    def __init__(self, printer: Printer) -> None:
         self.printer = printer
         self.channel = self._create_channel()
 
@@ -35,6 +37,6 @@ class Consumer:
             body: bytes,
         ) -> None:
             payload = body.decode()
-            self.printer(channel, method, props, payload)
+            self.printer.print(channel, method, props, payload)
 
         return _func
