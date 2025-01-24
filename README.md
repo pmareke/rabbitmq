@@ -34,6 +34,8 @@
 ### Producer
 
 - `Producers` are often long lived.
+- `Producers` are typically registered during application startup.
+- `Producers` can push enqueued messages (deliveries) to certain queues in certain exchanges.
 
 ## Example
 
