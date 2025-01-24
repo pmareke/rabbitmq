@@ -3,11 +3,13 @@
 ## Consumer
 
 - Add test.
+    - `DummyPrinter`.
+    - `Printer`.
 - Install dependencies.
 - Run test (Makefile).
 - Add RabbitMQ (compose).
 - `Consumer`.
-    - `Printer`.
+    - `SystemPrinter`.
 - Update entrypoint.
 
 ## Producer
