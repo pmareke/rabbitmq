@@ -1,0 +1,1 @@
+print("CONSUMER: Starting consumer")
