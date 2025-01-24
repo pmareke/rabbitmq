@@ -10,6 +10,11 @@ from src.printer import Printer
 class DummyPrinter(Printer):
     def __init__(self, message: str) -> None:
         self.message = message
+        self.expect_message = ""
+
+    @property
+    def expected_message(self) -> str:
+        return self.expect_message
 
     def print(
         self,
@@ -18,7 +23,7 @@ class DummyPrinter(Printer):
         props: BasicProperties,
         body: str,
     ) -> None:
-        expect(self.message).to(equal(body))
+        self.expect_message = body
         channel.stop_consuming()
 
 
@@ -28,7 +33,10 @@ class TestConsumer:
         printer = DummyPrinter(message)
         consumer = Consumer(printer)
         self._send_command(message)
+
         consumer.start()
+
+        expect(printer.expected_message).to(equal(message))
 
     def _send_command(self, message: str) -> None:
         params = pika.ConnectionParameters(host="rabbitmq")
