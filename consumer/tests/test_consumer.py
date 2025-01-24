@@ -4,20 +4,21 @@ from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
 from src.consumer import Consumer
+from src.printer import Printer
 
 
-class DummyPrinter:
+class DummyPrinter(Printer):
     def __init__(self, message: str) -> None:
         self.message = message
 
     def print(
         self,
         channel: BlockingChannel,
-        _method: Basic.Deliver,
-        _props: BasicProperties,
-        recieved_message: str,
+        method: Basic.Deliver,
+        props: BasicProperties,
+        body: str,
     ) -> None:
-        expect(self.message).to(equal(recieved_message))
+        expect(self.message).to(equal(body))
         channel.stop_consuming()
 
 
@@ -25,7 +26,7 @@ class TestConsumer:
     def test_recieve_a_message(self) -> None:
         message = "Hello, World!"
         printer = DummyPrinter(message)
-        consumer = Consumer(printer)  # type: ignore
+        consumer = Consumer(printer)
         self._send_command(message)
         consumer.start()
 
