@@ -1,6 +1,6 @@
 import pika
 from expects import equal, expect
-from pika.channel import BlockingChannel
+from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
 from src.producer import Producer
@@ -12,14 +12,16 @@ class TestProducer:
         producer = Producer()
 
         producer.send(message)
+        read_message = self._read_message()
 
-        self._send_and_read_message(message)
+        expect(read_message).to(equal(message))
 
-    def _send_and_read_message(self, message: str) -> None:
+    def _read_message(self) -> str:
+        self.message = ""
         params = pika.ConnectionParameters(host="rabbitmq")
         connection = pika.BlockingConnection(params)
         channel = connection.channel()
-        channel.queue_declare(queue="hello")
+        channel.queue_declare(queue=Producer.QUEUE_NAME)
 
         def _callback(
             channel: BlockingChannel,
@@ -28,10 +30,13 @@ class TestProducer:
             body: bytes,
         ) -> None:  # type: ignore
             channel.stop_consuming()
-            expect(message).to(equal(body.decode()))
+            self.message = body.decode()
             connection.close()
 
         channel.basic_consume(
-            queue="hello", on_message_callback=_callback, auto_ack=True
+            queue=Producer.QUEUE_NAME,
+            on_message_callback=_callback,
+            auto_ack=True,
         )
         channel.start_consuming()
+        return self.message
