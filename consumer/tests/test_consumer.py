@@ -32,8 +32,8 @@ class TestConsumer:
         message = "Hello, World!"
         printer = DummyPrinter(message)
         consumer = Consumer(printer)
-        self._send_command(message)
 
+        self._send_command(message)
         consumer.start()
 
         expect(printer.expected_message).to(equal(message))
@@ -42,6 +42,10 @@ class TestConsumer:
         params = pika.ConnectionParameters(host="rabbitmq")
         connection = pika.BlockingConnection(params)
         channel = connection.channel()
-        channel.queue_declare(queue="hello")
-        channel.basic_publish(exchange="", routing_key="hello", body=message)
+        channel.queue_declare(queue=Consumer.QUEUE_NAME)
+        channel.basic_publish(
+            exchange="",
+            routing_key=Consumer.QUEUE_NAME,
+            body=message,
+        )
         connection.close()

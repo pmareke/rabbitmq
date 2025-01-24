@@ -6,7 +6,7 @@ from src.printer import Printer
 
 
 class Consumer:
-    _QUEUE_NAME = "hello"
+    QUEUE_NAME = "hello"
 
     def __init__(self, printer: Printer) -> None:
         self.printer = printer
@@ -16,9 +16,9 @@ class Consumer:
         params = pika.ConnectionParameters(host="rabbitmq")
         connection = pika.BlockingConnection(params)
         channel = connection.channel()
-        channel.queue_declare(queue=self._QUEUE_NAME)
+        channel.queue_declare(queue=self.QUEUE_NAME)
         channel.basic_consume(
-            queue=self._QUEUE_NAME,
+            queue=self.QUEUE_NAME,
             on_message_callback=self._callback,
             auto_ack=True,
         )
