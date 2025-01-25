@@ -7,8 +7,12 @@ help:  ## show this help.
 
 .PHONY: up
 up: down
-	docker compose up --build
+	docker compose up --build -d
 
 .PHONY: down
 down: ## Stop and remove all the Docker services, volumes and networks
 	docker compose down -v --remove-orphans
+
+.PHONY: logs
+logs: ## show logs of a service, ex: make logs service=consumer
+	docker compose logs $(service)
