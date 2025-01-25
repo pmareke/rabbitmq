@@ -1,9 +1,8 @@
-from logging import Logger
-
 import pika
 from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
+from src.logger import Logger
 from src.resolver import Resolver
 
 
