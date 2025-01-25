@@ -1,7 +1,7 @@
-import pika
 from doublex import Mimic, Spy
 from doublex_expects import have_been_called_with
 from expects import equal, expect
+from pika import BlockingConnection, ConnectionParameters
 from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
@@ -26,8 +26,8 @@ class TestProducer:
 
     def _read_message(self) -> str:
         self.message = ""
-        params = pika.ConnectionParameters(host="rabbitmq")
-        connection = pika.BlockingConnection(params)
+        params = ConnectionParameters(host="rabbitmq")
+        connection = BlockingConnection(params)
         channel = connection.channel()
         channel.queue_declare(queue=Producer.QUEUE_NAME)
 
