@@ -1,3 +1,5 @@
+from logging import Logger
+
 import pika
 from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
@@ -8,8 +10,9 @@ from src.resolver import Resolver
 class Consumer:
     QUEUE_NAME = "hello"
 
-    def __init__(self, resolver: Resolver) -> None:
+    def __init__(self, resolver: Resolver, logger: Logger) -> None:
         self.resolver = resolver
+        self.logger = logger
         self.channel = self._create_channel()
 
     def _create_channel(self) -> BlockingChannel:
@@ -22,6 +25,7 @@ class Consumer:
             on_message_callback=self._callback,
             auto_ack=True,
         )
+        self.logger.info(" [*] Waiting for messages. To exit press CTRL+C")
         return channel
 
     def start(self) -> None:

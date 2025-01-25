@@ -1,7 +1,10 @@
+import logging
+
 from src.consumer import Consumer
 from src.print_resolver import PrintResolver
 
 resolver = PrintResolver()
-consumer = Consumer(resolver)
+logger = logging.getLogger(__name__)
+consumer = Consumer(resolver, logger)
 
 consumer.start()
