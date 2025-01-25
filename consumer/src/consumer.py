@@ -1,4 +1,4 @@
-import pika
+from pika import BlockingConnection, ConnectionParameters
 from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
@@ -18,8 +18,8 @@ class Consumer:
         channel.start_consuming()
 
     def _create_channel(self) -> BlockingChannel:
-        params = pika.ConnectionParameters(host="rabbitmq")
-        connection = pika.BlockingConnection(params)
+        params = ConnectionParameters(host="rabbitmq")
+        connection = BlockingConnection(params)
         channel = connection.channel()
         channel.queue_declare(queue=self.QUEUE_NAME)
         channel.basic_consume(

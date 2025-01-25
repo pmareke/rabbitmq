@@ -1,7 +1,7 @@
-import pika
 from doublex import Mimic, Spy
 from doublex_expects import have_been_called_with
 from expects import equal, expect
+from pika import BlockingConnection, ConnectionParameters
 from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
@@ -31,6 +31,8 @@ class DummyResolver(Resolver):
 
 
 class TestConsumer:
+    DEFAULT_EXCHANGE = ""
+
     def test_recieve_a_message(self) -> None:
         message = "Hello, World!"
         resolver = DummyResolver(message)
@@ -45,12 +47,12 @@ class TestConsumer:
         expect(resolver.expected_message).to(equal(message))
 
     def _send(self, message: str) -> None:
-        params = pika.ConnectionParameters(host="rabbitmq")
-        connection = pika.BlockingConnection(params)
+        params = ConnectionParameters(host="rabbitmq")
+        connection = BlockingConnection(params)
         channel = connection.channel()
         channel.queue_declare(queue=Consumer.QUEUE_NAME)
         channel.basic_publish(
-            exchange="",
+            exchange=self.DEFAULT_EXCHANGE,
             routing_key=Consumer.QUEUE_NAME,
             body=message,
         )
