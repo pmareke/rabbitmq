@@ -1,5 +1,3 @@
-from logging import Logger
-
 import pika
 from doublex import Mimic, Spy
 from doublex_expects import have_been_called_with
@@ -7,6 +5,7 @@ from expects import equal, expect
 from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
+from src.logger import Logger
 from src.producer import Producer
 
 
@@ -17,11 +16,13 @@ class TestProducer:
         producer = Producer(logger)
 
         producer.send(message)
+
+        log_message = " [x] Sent 'Hello, World!'"
+        expect(logger.info).to(have_been_called_with(log_message))
+
         read_message = self._read_message()
 
         expect(read_message).to(equal(message))
-        log_message = " [x] Sent 'Hello, World!'"
-        expect(logger.info).to(have_been_called_with(log_message))
 
     def _read_message(self) -> str:
         self.message = ""
