@@ -4,10 +4,10 @@ from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
 from src.consumer import Consumer
-from src.printer import Printer
+from src.resolver import Resolver
 
 
-class DummyPrinter(Printer):
+class DummyResolver(Resolver):
     def __init__(self, message: str) -> None:
         self.message = message
         self.expect_message = ""
@@ -16,7 +16,7 @@ class DummyPrinter(Printer):
     def expected_message(self) -> str:
         return self.expect_message
 
-    def print(
+    def resolve(
         self,
         channel: BlockingChannel,
         method: Basic.Deliver,
@@ -30,13 +30,13 @@ class DummyPrinter(Printer):
 class TestConsumer:
     def test_recieve_a_message(self) -> None:
         message = "Hello, World!"
-        printer = DummyPrinter(message)
-        consumer = Consumer(printer)
+        resolver = DummyResolver(message)
+        consumer = Consumer(resolver)
 
         self._send_command(message)
         consumer.start()
 
-        expect(printer.expected_message).to(equal(message))
+        expect(resolver.expected_message).to(equal(message))
 
     def _send_command(self, message: str) -> None:
         params = pika.ConnectionParameters(host="rabbitmq")

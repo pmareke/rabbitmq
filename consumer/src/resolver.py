@@ -5,9 +5,9 @@ from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic
 
 
-class Printer(ABC):
+class Resolver(ABC):
     @abstractmethod
-    def print(
+    def resolve(
         self,
         channel: BlockingChannel,
         method: Basic.Deliver,

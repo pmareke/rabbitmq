@@ -1,7 +1,7 @@
 from src.consumer import Consumer
-from src.system_printer import SystemPrinter
+from src.print_resolver import PrintResolver
 
-printer = SystemPrinter()
-consumer = Consumer(printer)
+resolver = PrintResolver()
+consumer = Consumer(resolver)
 
 consumer.start()
