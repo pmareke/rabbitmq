@@ -15,4 +15,4 @@ down: ## Stop and remove all the Docker services, volumes and networks
 
 .PHONY: logs
 logs: ## show logs of a service, ex: make logs service=consumer
-	docker compose logs $(service)
+	docker compose logs -f $(service)
