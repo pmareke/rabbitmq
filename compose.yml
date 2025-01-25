@@ -16,7 +16,7 @@ services:
         condition: service_healthy
 
   rabbitmq:
-    image: 'rabbitmq:3.13-management'
+    image: 'rabbitmq:management'
     ports:
       - '5672:5672'
       - '15672:15672'
