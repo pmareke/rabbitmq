@@ -15,5 +15,5 @@ class Producer:
         channel = connection.channel()
         channel.queue_declare(queue=self.QUEUE_NAME)
         channel.basic_publish(exchange="", routing_key="hello", body=body)
-        self.logger.info(f" [x] Sent 'Hello {body}!'")
+        self.logger.info(f" [x] Sent '{body}'")
         connection.close()

@@ -20,7 +20,7 @@ class TestProducer:
         read_message = self._read_message()
 
         expect(read_message).to(equal(message))
-        log_message = " [x] Sent 'Hello Hello, World!!'"
+        log_message = " [x] Sent 'Hello, World!'"
         expect(logger.info).to(have_been_called_with(log_message))
 
     def _read_message(self) -> str:
