@@ -38,14 +38,14 @@ class TestConsumer:
         logger = Mimic(Spy, Logger)
         consumer = Consumer(resolver, logger)
 
-        self._send_command(message)
+        self._send(message)
         consumer.start()
 
         expect(resolver.expected_message).to(equal(message))
         log_message = " [*] Waiting for messages. To exit press CTRL+C"
         expect(logger.info).to(have_been_called_with(log_message))
 
-    def _send_command(self, message: str) -> None:
+    def _send(self, message: str) -> None:
         params = pika.ConnectionParameters(host="rabbitmq")
         connection = pika.BlockingConnection(params)
         channel = connection.channel()
