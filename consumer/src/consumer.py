@@ -12,7 +12,10 @@ class Consumer:
     def __init__(self, resolver: Resolver, logger: Logger) -> None:
         self.resolver = resolver
         self.logger = logger
-        self.channel = self._create_channel()
+
+    def start(self) -> None:
+        channel = self._create_channel()
+        channel.start_consuming()
 
     def _create_channel(self) -> BlockingChannel:
         params = pika.ConnectionParameters(host="rabbitmq")
@@ -26,9 +29,6 @@ class Consumer:
         )
         self.logger.info(" [*] Waiting for messages. To exit press CTRL+C")
         return channel
-
-    def start(self) -> None:
-        self.channel.start_consuming()
 
     def _callback(
         self,

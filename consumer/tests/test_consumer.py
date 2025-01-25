@@ -1,5 +1,3 @@
-from logging import Logger
-
 import pika
 from doublex import Mimic, Spy
 from doublex_expects import have_been_called_with
@@ -8,6 +6,7 @@ from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic, BasicProperties
 
 from src.consumer import Consumer
+from src.logger import Logger
 from src.resolver import Resolver
 
 
@@ -41,9 +40,9 @@ class TestConsumer:
         self._send(message)
         consumer.start()
 
-        expect(resolver.expected_message).to(equal(message))
         log_message = " [*] Waiting for messages. To exit press CTRL+C"
         expect(logger.info).to(have_been_called_with(log_message))
+        expect(resolver.expected_message).to(equal(message))
 
     def _send(self, message: str) -> None:
         params = pika.ConnectionParameters(host="rabbitmq")
