@@ -1,8 +1,7 @@
-import logging
-
+from src.logger import Logger
 from src.producer import Producer
 
-logger = logging.getLogger(__name__)
+logger = Logger()
 producer = Producer(logger)
 
 for name in ["Alice", "Bob", "Charlie"]:

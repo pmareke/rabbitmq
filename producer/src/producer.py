@@ -1,6 +1,6 @@
-from logging import Logger
-
 import pika
+
+from src.logger import Logger
 
 
 class Producer:
