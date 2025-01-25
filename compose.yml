@@ -1,16 +1,16 @@
 services:
-  producer:
-    build: producer
-    volumes:
-      - ./producer:/app
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-
   consumer:
     build: consumer
     volumes:
       - ./consumer:/app
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  producer:
+    build: producer
+    volumes:
+      - ./producer:/app
     depends_on:
       rabbitmq:
         condition: service_healthy
