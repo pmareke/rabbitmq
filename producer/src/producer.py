@@ -17,7 +17,7 @@ class Producer:
         channel.queue_declare(queue=self.QUEUE_NAME)
         channel.basic_publish(
             exchange=self.DEFAULT_EXCHANGE,
-            routing_key="hello",
+            routing_key=self.QUEUE_NAME,
             body=body,
         )
         self.logger.info(f" [x] Sent '{body}'")
