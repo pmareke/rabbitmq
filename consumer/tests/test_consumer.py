@@ -11,8 +11,7 @@ from src.resolver import Resolver
 
 
 class DummyResolver(Resolver):
-    def __init__(self, message: str) -> None:
-        self.message = message
+    def __init__(self) -> None:
         self.expect_message = ""
 
     @property
@@ -35,7 +34,7 @@ class TestConsumer:
 
     def test_recieve_a_message(self) -> None:
         message = "Hello, World!"
-        resolver = DummyResolver(message)
+        resolver = DummyResolver()
         logger = Mimic(Spy, Logger)
         consumer = Consumer(resolver, logger)
 
