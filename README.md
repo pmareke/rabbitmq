@@ -3,7 +3,7 @@
 - RabbitMQ is a reliable and mature messaging and streaming broker.
 - AMQP 0-9-1 (`Advanced Message Queuing Protocol`) is a messaging protocol.
 
-![System](system.png)
+![System](./images/system.png)
 
 ## Exchanges
 
